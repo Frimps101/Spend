@@ -4,6 +4,49 @@
 <body>
     <%- include("../partials/nav")%>
 
+    <div class="overlay" data-overlay></div>
+<!--
+    - MODAL
+  -->
+  <div class="modal" data-modal>
+
+    <div class="modal-close-overlay" data-modal-overlay></div>
+
+    <div class="modal-content">
+
+      <button class="modal-close-btn" data-modal-close>
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <div class="newsletter-img">
+        <img src="./assets/imgs/modal.jpg" alt="subscribe newsletter" width="400" height="400">
+      </div>
+
+      <div class="newsletter">
+
+        <form action="#">
+
+          <div class="newsletter-header">
+
+            <h3 class="newsletter-title">Welcome To Spend!</h3>
+
+            <p class="newsletter-desc">
+              Subscribe to our newsletter now and receive exclusive discounts and offers directly in your inbox. All you have to do is enter your email address in the form below and click "Subscribe".
+            </p>
+
+          </div>
+
+          <input type="email" name="email" class="email-field" placeholder="Email Address" required>
+
+          <button type="submit" class="btn-newsletter">Subscribe</button>
+
+        </form>
+
+      </div>
+
+    </div>
+
+  </div>
 
 <!--
     - NOTIFICATION TOAST
@@ -203,6 +246,6 @@
       
       <%- include("../partials/footer")%>
 
-      <script src="assets/main/script.js"></script>
+      <script src="./assets/main/script.js" type="text/javascript"></script>
 </body>
 </html>
