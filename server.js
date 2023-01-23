@@ -1,23 +1,52 @@
 import express from "express";
 import mysql from "mysql";
 import cors from "cors";
+import bodyParser from "body-parser";
 
 
 const app = express();
+const encoder = bodyParser.urlencoded();
+
 app.use(cors());
 app.use(express.json());
 app.use("/assets", express.static("./static/assets"));
 app.set("view engine", "ejs")
 
-const db = mysql.createConnection({
+const connection = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "",
-  database: "spendDb",
+  password: "Nyantekyiwaa100",
+  database: "spend",
+})
+
+// Connection to database
+connection.connect((err)=>{
+  if(err) throw err
+  else console.log("Connected Successfully")
 })
 
 app.get("/", (req, res)=>{
-    res.render("pages/index", {title: "Home"})
+  const q = "SELECT * FROM product";
+  connection.query(q, (err, data)=>{
+    console.log(data);
+  });
+
+  res.render("pages/index", {title: "Home", products: data})
+})
+
+app.get("/login", (req, res)=>{
+  res.render("pages/login", {title: "Login"})
+})
+
+app.post("/login", (req, res)=>{
+
+  const q = `select * from user where email = ? and user_password = ?;`;
+  connection.query(q, [req.body.email, req.body.password], (err, data) => {
+    console.log(data);
+    if (err) return res.send(err);
+    return res.redirect("/");
+  });
+
 })
 
 app.get("/details", (req, res)=>{
@@ -32,6 +61,6 @@ app.get("/details", (req, res)=>{
   })
 })
 
-app.listen(8800, ()=>{
+app.listen(3000, ()=>{
     console.log("Connected to backend");
 })

@@ -36,7 +36,7 @@
 
           </div>
 
-          <input type="email" name="email" class="email-field" placeholder="Email Address" required>
+          <input type="email" name="email" class="email-field" placeholder="Enter Email Address" required>
 
           <button type="submit" class="btn-newsletter">Subscribe</button>
 
@@ -243,6 +243,22 @@
         </div>
   
       </div>
+
+      <!-- Products -->
+      <div class="product">
+          <h2>Products</h2>
+          <% products.forEach((product) { %>
+          <div class="card">
+            <img src=<%= product.imageURL %> alt="Product Image">
+            <h3><%= product.title %></h3>
+            <div class="price-cart">
+              <p class="price">$<%= product.price %></p>
+              <button class="add-to-cart"><i class="fa-solid fa-cart-plus"></i>Add to Cart</button>
+            </div>
+          </div>
+        <% }); %>
+      </div>
+      <!-- Products -->
       
       <%- include("../partials/footer")%>
 
