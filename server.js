@@ -1,11 +1,10 @@
 import express from "express";
 import mysql from "mysql";
 import cors from "cors";
-import bodyParser from "body-parser";
+import CircularJSON from "circular-json";
 
 
 const app = express();
-const encoder = bodyParser.urlencoded();
 
 app.use(cors());
 app.use(express.json());
@@ -27,12 +26,25 @@ connection.connect((err)=>{
 
 app.get("/", (req, res)=>{
   const q = "SELECT * FROM product";
+  //let result = {}
   connection.query(q, (err, data)=>{
-    console.log(data);
+    for(var i in data){
+      console.log(data[i].title);
+    }
+    //console.log(data);
+    // let result = Object.values(JSON.parse(JSON.stringify(data)));
+    // console.log(typeof result)
+    // result.forEach((v) => console.log(v));
+    res.render("pages/index", {title: "Home", products: data})
   });
 
-  res.render("pages/index", {title: "Home", products: data})
+  //let result = CircularJSON.stringify(data);
+  //console.log(result);
+  //let result = Object.values(JSON.parse(JSON.stringify(data)));
+  // res.render("pages/index", {title: "Home", products: data})
 })
+
+
 
 app.get("/login", (req, res)=>{
   res.render("pages/login", {title: "Login"})
@@ -49,18 +61,40 @@ app.post("/login", (req, res)=>{
 
 })
 
-app.get("/details", (req, res)=>{
-  const q = "SELECT title, imageURL, price, description FROM product";
+app.get("/details/:id", (req, res)=>{
+  const id = req.params.id;
+  console.log(id)
 
-  db.query(q, (err, data)=>{
+  const q = `SELECT title, imageURL, price, description FROM product WHERE id=${id}`;
+  //console.log(q);
+
+  connection.query(q, (err, data)=>{
     if(err){
       console.log(err);
       return res.json(err);
     }
-    return res.json(data);
+    // return res.json(data);
+    console.log(data);
+    res.render("pages/product-details", {title: "Product Details", products: data})
   })
 })
 
-app.listen(3000, ()=>{
+
+app.get("/products", (req, res)=>{
+  const q =  `SELECT * FROM product`;
+
+  connection.query(q, (err, data)=>{
+    if(err){
+      console.log(err);
+    }
+    console.log(data);
+    res.render("pages/products", {title: "Products", products: data})
+  })
+})
+
+
+
+
+app.listen(8800, ()=>{
     console.log("Connected to backend");
 })

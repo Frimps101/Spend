@@ -245,23 +245,33 @@
       </div>
 
       <!-- Products -->
-      <div class="product">
-          <h2>Products</h2>
-          <% products.forEach((product) { %>
-          <div class="card">
-            <img src=<%= product.imageURL %> alt="Product Image">
-            <h3><%= product.title %></h3>
-            <div class="price-cart">
-              <p class="price">$<%= product.price %></p>
-              <button class="add-to-cart"><i class="fa-solid fa-cart-plus"></i>Add to Cart</button>
+          <div class="product">
+            <h2>Products</h2>
+            <% for(var product in products){ %>
+            <div class="product-container">
+              <div class="product-img">
+                  <img src=<%= products[product].imageURL %> alt="Product Image">
+              </div>
+            
+              <div class="product-title">
+                <h3><%= products[product].title %></h3>
+              </div>
+
+              <div class="price-cart">
+                <p class="price">GH₵ <%= products[product].price %></p>
+                <a class="add-to-cart"><i class="fa-solid fa-cart-plus"></i>Add to Cart</a>
+              </div> 
+              
+              <div class="product-details">
+                <a href="/details/<%= products[product].id %>">View details</a>
+              </div>
             </div>
+           <% } %>
           </div>
-        <% }); %>
-      </div>
       <!-- Products -->
       
       <%- include("../partials/footer")%>
 
       <script src="./assets/main/script.js" type="text/javascript"></script>
 </body>
-</html>
+</html> 
