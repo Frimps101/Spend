@@ -87,12 +87,105 @@ app.get("/products", (req, res)=>{
     if(err){
       console.log(err);
     }
-    console.log(data);
+    //console.log(data);
+    for(let product in data){
+      console.log(data[product].title)
+    }
     res.render("pages/products", {title: "Products", products: data})
   })
 })
 
 
+// GET Add Product
+app.get("/products/add", (req, res)=>{
+  const q = "INSERT INTO product(`title`, `imageURL`, `price`, `description`) VALUES (?)";
+
+  const values = [
+    req.body.title,
+    req.body.imageURL,
+    req.body.price,
+    req.body.description,
+  ];
+
+
+  connection.query(q, [values], (err, data)=>{
+    if(err){
+      console.log(err);
+    }
+    
+      console.log(data)
+    res.render("pages/add-product", {title: "Add Product"})
+  })
+})
+
+
+// POST Add Product
+app.post("/products/add", (req, res)=>{
+  const q = "INSERT INTO product(`title`, `imageURL`, `price`, `description`) VALUES (?)";
+
+  const values = [
+    req.body.title,
+    req.body.imageURL,
+    req.body.price,
+    req.body.description,
+  ];
+
+
+  connection.query(q, [values], (err, data)=>{
+    if(err){
+      console.log(err);
+    }
+    
+      console.log(data)
+    res.render("pages/add-product", {title: "Add Product"})
+  })
+})
+
+// GET Edit Product
+app.get("/products/edit/:id", (req, res)=>{
+  const productId = req.params.id;
+
+  res.render("pages/edit-product", {title: "Edit Product"})
+
+  const q =  "UPDATE product SET `title`= ?, `imageURL`= ?, `price`= ?, `description`= ? WHERE id = ?";
+
+  // connection.query(q, [...values, productId], (err, data)=>{
+  //   if(err){
+  //     console.log(err);
+  //   }
+  //   console.log(data);
+  //   res.render("pages/product-details", {title: "Edit Product", products: data})
+  // })
+})
+
+
+// PUT Edit Product
+app.put("/products/edit/:id", (req, res)=>{
+  const productId = req.params.id;
+
+  res.render("pages/product-details")
+
+  const q =  "UPDATE product SET `title`= ?, `imageURL`= ?, `price`= ?, `description`= ? WHERE id = ?";
+
+  // connection.query(q, [...values, productId], (err, data)=>{
+  //   if(err){
+  //     console.log(err);
+  //   }
+  //   console.log(data);
+  //   res.render("pages/product-details", {title: "Edit Product", products: data})
+  // })
+})
+
+// Delete Product
+app.delete("/delete/:id", (req, res) => {
+  const productId = req.params.id;
+  const q = " DELETE FROM product WHERE id = ? ";
+
+  db.query(q, [productId], (err, data) => {
+    if (err) return res.send(err);
+    return res.json(data);
+  });
+});
 
 
 app.listen(8800, ()=>{
