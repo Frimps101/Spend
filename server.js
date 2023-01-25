@@ -27,8 +27,8 @@ connection.connect((err)=>{
 
 app.get("/", (req, res)=>{
   const q = "SELECT * FROM product";
-  connection.query(q, (err, data)=>{
-    console.log(data);
+  var data = connection.query(q, (err, data)=>{
+    return data;
   });
 
   res.render("pages/index", {title: "Home", products: data})
