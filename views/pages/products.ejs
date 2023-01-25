@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include("../partials/head"); %>
+<body>
+    <%- include("../partials/nav")%>
+
+
+    <h1>Products Page</h1>
+
+    <div class="products-container">
+        <% for(var product in products){ %>
+            <!-- <p><%=products[product].title %></p> -->
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td><%= products[product].title %></td>
+                        <td><%= products[product].price %></td>
+                        <td><%= products[product].description %></td>
+
+                        <div class="productslinks">
+                            <a href="/products/add">Add Product</a>
+                            <a href="/products/edit/<%= products[product].id %>">Edit Product</a>
+                            <a href="/delete/<%= products[product].id %>">Delete Product</a>
+                        </div>
+                    </tr>
+                </tbody>
+            </table>
+        <% } %>
+    </div>
+<!-- <script src="assets/main/script.js"></script> -->
+</body>
+</html>

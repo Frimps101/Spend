@@ -3,13 +3,13 @@
 <%- include("../partials/head"); %>
 <body>
     <%- include("../partials/nav")%>
-
-<h1><%= product.title %></h1>
+    
+<h1><%= products[0].title %></h1>
 <div class="image">
-    <img src="<%= product.imageUrl %>" alt="<%= product.title %>">
+    <img src="<%= products[0].imageURL %>" alt="<%= products[0].title %>">
 </div>
-<h2><%= product.price %></h2>
-<p><%= product.description %></p>
+<h2>GH₵ <%= products[0].price %></h2>
+<p><%= products[0].description %></p>
 
     <%- include("../partials/footer")%>
 
