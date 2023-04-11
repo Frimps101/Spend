@@ -1,8 +1,8 @@
 import express from "express";
 import mysql from "mysql";
 import cors from "cors";
-import CircularJSON from "circular-json";
 
+const port = 8800;
 
 const app = express();
 
@@ -18,37 +18,30 @@ const connection = mysql.createConnection({
   database: "spend",
 })
 
+console.log("hELLO, WORLD")
+
 // Connection to database
-connection.connect((err)=>{
-  if(err) throw err
-  else console.log("Connected Successfully")
-})
+// connection.connect((err)=>{
+//   if(err) throw err
+//   else console.log("Connected Successfully")
+// })
 
 app.get("/", (req, res)=>{
   const q = "SELECT * FROM product";
-<<<<<<< HEAD
-  var data = connection.query(q, (err, data)=>{
-    return data;
-=======
+
+  //var data = connection.query(q, (err, data)=>{
+    //return data;
+
   //let result = {}
   connection.query(q, (err, data)=>{
-    for(var i in data){
-      console.log(data[i].title);
-    }
-    //console.log(data);
-    // let result = Object.values(JSON.parse(JSON.stringify(data)));
-    // console.log(typeof result)
-    // result.forEach((v) => console.log(v));
+    // for(var i in data){
+    //   console.log(data[i].title);
+    // }
+
     res.render("pages/index", {title: "Home", products: data})
->>>>>>> acf529196f4cb44427e3fe851cd1601d480ff908
   });
 
-  //let result = CircularJSON.stringify(data);
-  //console.log(result);
-  //let result = Object.values(JSON.parse(JSON.stringify(data)));
-  // res.render("pages/index", {title: "Home", products: data})
-})
-
+//})
 
 
 app.get("/login", (req, res)=>{
@@ -71,14 +64,13 @@ app.get("/details/:id", (req, res)=>{
   console.log(id)
 
   const q = `SELECT title, imageURL, price, description FROM product WHERE id=${id}`;
-  //console.log(q);
 
   connection.query(q, (err, data)=>{
     if(err){
       console.log(err);
       return res.json(err);
     }
-    // return res.json(data);
+    
     console.log(data);
     res.render("pages/product-details", {title: "Product Details", products: data})
   })
@@ -92,7 +84,7 @@ app.get("/products", (req, res)=>{
     if(err){
       console.log(err);
     }
-    //console.log(data);
+    
     for(let product in data){
       console.log(data[product].title)
     }
@@ -153,14 +145,6 @@ app.get("/products/edit/:id", (req, res)=>{
   res.render("pages/edit-product", {title: "Edit Product"})
 
   const q =  "UPDATE product SET `title`= ?, `imageURL`= ?, `price`= ?, `description`= ? WHERE id = ?";
-
-  // connection.query(q, [...values, productId], (err, data)=>{
-  //   if(err){
-  //     console.log(err);
-  //   }
-  //   console.log(data);
-  //   res.render("pages/product-details", {title: "Edit Product", products: data})
-  // })
 })
 
 
@@ -171,14 +155,6 @@ app.put("/products/edit/:id", (req, res)=>{
   res.render("pages/product-details")
 
   const q =  "UPDATE product SET `title`= ?, `imageURL`= ?, `price`= ?, `description`= ? WHERE id = ?";
-
-  // connection.query(q, [...values, productId], (err, data)=>{
-  //   if(err){
-  //     console.log(err);
-  //   }
-  //   console.log(data);
-  //   res.render("pages/product-details", {title: "Edit Product", products: data})
-  // })
 })
 
 // Delete Product
@@ -193,6 +169,6 @@ app.delete("/delete/:id", (req, res) => {
 });
 
 
-app.listen(8800, ()=>{
-    console.log("Connected to backend");
-})
+app.listen(port, ()=>{
+    console.log(`Connected to backend on https://localhost:${port}`);
+})})
